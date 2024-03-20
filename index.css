@@ -1,0 +1,50 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#card{
+    margin-top: 200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ul{
+    width: 70%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+}
+
+ul>li{
+    width: 15%;
+    margin-inline: 15px;
+    margin-bottom: 90px;
+}
+
+
+ul > li > img {
+    width: 100%;
+    height: auto;
+    display: block;
+    clip-path: polygon(80% 0%,100% 20%,100% 100%,0% 100%,0% 0%);
+    transition: clip-path 1s; 
+}
+
+ul > li > img:hover {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+
+ul p{
+    margin: 0;
+    background-color: rgb(09,14,28);
+    border-top: solid 1px #785A28;
+    text-align: center;
+    color: #785A28;
+}
