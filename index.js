@@ -22,7 +22,9 @@ function get10Champions(indice){
             viewChampion.addEventListener('click',getDetailChampion.bind(null, json[i]["id"]));
 
             const divImgChampion = document.createElement('div');
+            divImgChampion.id = 'divImgChamp';
             const imgChampion = document.createElement('img');
+            imgChampion.id = 'imgChamp';
             imgChampion.src = json[i]["icon"];
             imgChampion.alt = json[i]["id"];
 
@@ -70,12 +72,13 @@ function getPrecChampions(){
             listChampions.removeChild(listChampions.firstChild);
         }
         buttonVoirSuiv.disabled = false; 
-        if (idStartChamp - 10 > 0){
+        if (idStartChamp - 10 >= 0){
             idStartChamp -= 10;
+            if(idStartChamp == 0){
+                buttonVoirPrec.disabled = true;
+            }
         }
-        else{
-            buttonVoirPrec.disabled = true;
-        }
+
         
         get10Champions(idStartChamp);
         
