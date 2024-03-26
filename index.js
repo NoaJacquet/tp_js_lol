@@ -6,7 +6,8 @@ let idStartChamp = 0;
 
 buttonVoirPrec.disabled = true; 
 
-function get10Champions(){
+function get10Champions(indice){
+    console.log(indice)
     fetch('http://localhost:3000/champions', {
         method : 'GET'
     })
@@ -15,14 +16,29 @@ function get10Champions(){
         while (listChampions.firstChild) {
             listChampions.removeChild(listChampions.firstChild);
         }
-        for(let i = 0; i < 10; i++){
+        for(let i = indice; i < indice + 10; i++){
+            
             const viewChampion = document.createElement('li'); 
-            viewChampion.textContent = json[i]["id"];
             viewChampion.addEventListener('click',getDetailChampion.bind(null, json[i]["id"]));
+
+            const divImgChampion = document.createElement('div');
+            const imgChampion = document.createElement('img');
+            imgChampion.src = json[i]["icon"];
+            imgChampion.alt = json[i]["id"];
+
+            divImgChampion.appendChild(imgChampion);
+
+            const nomChampion = document.createElement('p');
+            nomChampion.textContent = json[i]["id"];
+            
+            viewChampion.appendChild(divImgChampion); 
+            viewChampion.appendChild(nomChampion); 
+
             listChampions.appendChild(viewChampion);
         }
-        });
+    });
 };
+
 
 function getNextChampions(){
     fetch('http://localhost:3000/champions', {
@@ -40,12 +56,7 @@ function getNextChampions(){
         else{
             buttonVoirSuiv.disabled = true;
         }
-        for(let i = idStartChamp; i < idStartChamp + 10; i++){
-            const viewChampion = document.createElement('li'); 
-            viewChampion.textContent = json[i]["id"];
-            viewChampion.addEventListener('click',getDetailChampion.bind(null, json[i]["id"]));
-            listChampions.appendChild(viewChampion);
-        }
+        get10Champions(idStartChamp);
         });
 };
 
@@ -65,12 +76,9 @@ function getPrecChampions(){
         else{
             buttonVoirPrec.disabled = true;
         }
-        for(let i = idStartChamp; i < idStartChamp +10; i++){
-            const viewChampion = document.createElement('li'); 
-            viewChampion.textContent = json[i]["id"];
-            viewChampion.addEventListener('click',getDetailChampion.bind(null, json[i]["id"]));
-            listChampions.appendChild(viewChampion);
-        }
+        
+        get10Champions(idStartChamp);
+        
         });
 };
 
@@ -115,7 +123,7 @@ function getMoyenneNoteByChampion(idC){
     });
 }
 
-get10Champions();
+get10Champions(0);
 buttonVoirPrec.addEventListener('click', getPrecChampions);
 buttonVoirSuiv.addEventListener('click', getNextChampions);
 
