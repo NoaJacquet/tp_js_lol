@@ -83,14 +83,37 @@ function getDetailChampion(id){
         while (listChampions.firstChild) {
             listChampions.removeChild(listChampions.firstChild);
         }
+        
         for(const [key, value] of Object.entries(json)){
-            const viewChampion = document.createElement('p'); 
-            viewChampion.textContent = key + " : " + value;
-            listChampions.appendChild(viewChampion);
+            const detail = document.createElement('p'); 
+            detail.textContent = key + " : " + value;
+            listChampions.appendChild(detail);
         }
+        const detail = document.createElement('p'); 
+        console.log(getMoyenneNoteByChampion(id));
+        detail.textContent = "note : " +  getMoyenneNoteByChampion(id);
+        listChampions.appendChild(detail);
         });
 };
 
+function getMoyenneNoteByChampion(idC){
+    fetch('http://localhost:3000/notes/', {
+        method : 'GET'
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        let somme = 0;
+        let cpt = 0;
+        for (let note of json){
+            if (note['idChampion'] === idC) {
+                somme += note['notation'];
+                cpt += 1;
+            }
+        }
+        console.log(somme /cpt);
+        return somme / cpt;
+    });
+}
 
 get10Champions();
 buttonVoirPrec.addEventListener('click', getPrecChampions);
