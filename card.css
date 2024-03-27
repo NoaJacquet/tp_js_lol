@@ -42,7 +42,7 @@ body{
 }
 
 
-#liste-champions p{
+#liste-champions p, select, button{
     margin: 0;
     background-color: rgb(09,14,28);
     border-top: solid 1px #785A28;

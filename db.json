@@ -1,5 +1,5 @@
 {
-  "champions" :[
+  "champions": [
     {
       "id": "aatrox",
       "key": "266",
@@ -5894,14 +5894,39 @@
   ],
   "notes": [
     {
-      "id" : 1,
-      "notation" : 5,
-      "idChampion" : "aatrox"
+      "id": 1,
+      "notation": "3",
+      "idChampion": "aatrox"
     },
     {
-      "id" : 2,
-      "notation" : 4,
-      "idChampion" : "aatrox"
+      "id": 2,
+      "notation": "1",
+      "idChampion": "aatrox"
+    },
+    {
+      "id": 3,
+      "notation": "1",
+      "idChampion": "aatrox"
+    },
+    {
+      "id": 4,
+      "notation": "1",
+      "idChampion": "aatrox"
+    },
+    {
+      "id": 5,
+      "notation": "1",
+      "idChampion": "aatrox"
+    },
+    {
+      "id": 6,
+      "notation": "1",
+      "idChampion": "aatrox"
+    },
+    {
+      "id": 7,
+      "notation": "1",
+      "idChampion": "aatrox"
     }
   ]
 }
