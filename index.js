@@ -7,7 +7,6 @@ let idStartChamp = 0;
 buttonVoirPrec.disabled = true; 
 
 function get10Champions(indice){
-    console.log(indice)
     fetch('http://localhost:3000/champions', {
         method : 'GET'
     })
@@ -17,6 +16,9 @@ function get10Champions(indice){
             listChampions.removeChild(listChampions.firstChild);
         }
         for(let i = indice; i < indice + 10; i++){
+            if (i>=json.length){
+                return
+            }
             
             const viewChampion = document.createElement('li'); 
             viewChampion.addEventListener('click',getDetailChampion.bind(null, json[i]["id"]));
@@ -51,13 +53,16 @@ function getNextChampions(){
         while (listChampions.firstChild) {
             listChampions.removeChild(listChampions.firstChild);
         }
-        buttonVoirPrec.disabled = false; 
+        buttonVoirPrec.disabled = false;
+        buttonVoirPrec.style.display = 'inline-block';
         if (idStartChamp + 10 < json.length){
             idStartChamp += 10;
+            if(idStartChamp+10 > json.length){
+                buttonVoirSuiv.disabled = true;
+                buttonVoirSuiv.style.display = 'none';
+            }
         }
-        else{
-            buttonVoirSuiv.disabled = true;
-        }
+        
         get10Champions(idStartChamp);
         });
 };
@@ -72,10 +77,12 @@ function getPrecChampions(){
             listChampions.removeChild(listChampions.firstChild);
         }
         buttonVoirSuiv.disabled = false; 
+        buttonVoirSuiv.style.display = 'inline-block';
         if (idStartChamp - 10 >= 0){
             idStartChamp -= 10;
             if(idStartChamp == 0){
                 buttonVoirPrec.disabled = true;
+                buttonVoirPrec.style.display = 'none';
             }
         }
 
@@ -84,6 +91,37 @@ function getPrecChampions(){
         
         });
 };
+
+function getType(){
+    fetch('http://localhost:3000/champions', {
+        method : 'GET'
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        const typeList = document.getElementById('type'); // Sélection de la liste ul avec l'ID "type"
+        typeList.innerHTML = ''; // Effacer le contenu précédent de la liste
+        
+        const listeType = [];
+        
+        // Ajout du type "Tout"
+        const allListItem = document.createElement('li'); // Créer un nouvel élément li
+        allListItem.textContent = "Tout"; // Définir le texte de l'élément li comme "Tout"
+        typeList.appendChild(allListItem); // Ajouter l'élément li à la liste ul
+
+        // Parcours des types de champions
+        for(let i = 0; i < json.length ; i++){
+            for(let type of json[i]['tags']){
+                if(!listeType.includes(type)){
+                    listeType.push(type);
+                    const listItem = document.createElement('li'); // Créer un nouvel élément li
+                    listItem.textContent = type; // Définir le texte de l'élément li comme le type
+                    typeList.appendChild(listItem); // Ajouter l'élément li à la liste ul
+                }
+            }
+        }
+    });
+};
+
 
 function getDetailChampion(id){
     fetch('http://localhost:3000/champions/'+id, {
@@ -127,6 +165,7 @@ function getMoyenneNoteByChampion(idC){
 }
 
 get10Champions(0);
+getType();
 buttonVoirPrec.addEventListener('click', getPrecChampions);
 buttonVoirSuiv.addEventListener('click', getNextChampions);
 
